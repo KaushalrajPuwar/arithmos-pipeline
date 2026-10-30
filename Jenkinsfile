@@ -65,6 +65,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
+                    docker compose down --remove-orphans || true
                     docker compose up -d
                     for i in $(seq 1 24); do
                       if curl -fsS http://localhost:8081/actuator/health 2>/dev/null | grep -q '"status":"UP"'; then
