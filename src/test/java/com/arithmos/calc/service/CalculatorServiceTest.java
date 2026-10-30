@@ -17,6 +17,12 @@ class CalculatorServiceTest {
   }
 
   @Test
+  @DisplayName("add handles decimals")
+  void addHandlesDecimals() {
+    assertEquals(5.5, calculatorService.add(2.25, 3.25), 1e-9);
+  }
+
+  @Test
   @DisplayName("add handles negative numbers")
   void addHandlesNegatives() {
     assertEquals(-1.0, calculatorService.add(2, -3));
