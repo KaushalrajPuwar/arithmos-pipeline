@@ -4,6 +4,8 @@ pipeline {
     environment {
         IMAGE = 'kaushalrajpuwar/arithmos-calculator'
         NOTIFY_EMAIL = 'kaushalrajpuwar@gmail.com'
+        JAVA_HOME = '/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home'
+        PATH = "/opt/homebrew/opt/openjdk@21/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     }
 
     triggers {
