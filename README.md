@@ -1,8 +1,8 @@
-# Arithmos Calculator — DevOps Pipeline Mini-Project
+# Arithmos Calculator: DevOps Pipeline Mini-Project
 
 A small but production-style Calculator REST API in Java (Spring Boot),
-wrapped in a fully automated DevOps pipeline: **Git/GitHub → Jenkins →
-Docker → Docker Compose**. Push to `main` and the pipeline builds, tests,
+wrapped in a fully automated DevOps pipeline: **Git/GitHub to Jenkins to
+Docker to Docker Compose**. Push to `main` and the pipeline builds, tests,
 packages, containerizes, pushes, and deploys with no manual steps.
 
 **Links**
@@ -36,7 +36,7 @@ e.g. `{ "timestamp": "...", "status": 400, "error": "Bad Request",
 
 ```bash
 mvn clean package -DskipTests   # build executable JAR (tests run separately in CI)
-mvn test                        # 14 tests: 7 service unit + 7 MockMvc endpoint tests
+mvn test                        # 15 tests: 8 service unit + 7 MockMvc endpoint tests
 java -jar target/arithmos-calculator-*.jar
 ```
 
@@ -80,22 +80,28 @@ docker compose down
 
 Declarative pipeline in `Jenkinsfile` (Pipeline-from-SCM, branch `main`):
 
-1. **Checkout** — pull latest code on trigger.
-2. **Build** — `mvn clean package -DskipTests`.
-3. **Test** — `mvn test`; publishes JUnit XML; fails the build on test failure.
-4. **Docker Build** — tags the image with the Jenkins build number (plus `:latest`).
-5. **Push** — pushes to Docker Hub using the Jenkins-managed
-   `dockerhub-creds` credential (never hard-coded).
-6. **Deploy** — `docker compose up -d`, then verifies health via
-   `/actuator/health` and an end-to-end call through the Nginx proxy.
+1. **Checkout**: fetch the triggered revision from GitHub.
+2. **Build**: run `mvn clean package -DskipTests`.
+3. **Test**: run `mvn test`, publish JUnit XML, and fail on test failures.
+4. **Docker Build**: tag the image with the Jenkins build number and `:latest`.
+5. **Push**: publish both tags using the Jenkins-managed `dockerhub-creds`
+   credential, never a hard-coded secret.
+6. **Deploy**: run `docker compose down --remove-orphans`, then
+   `docker compose up -d`; verify `/actuator/health` and an API call through Nginx.
 
-Triggers: GitHub webhook (`githubPush()`) with Poll SCM (`H/2 * * * *`) as
-fallback. Email notification (success/failure) is sent on every build.
-Re-running the pipeline is idempotent (`compose up -d` + health gate).
+Trigger: GitHub push webhook (`githubPush()`) delivered to Jenkins through
+the reserved ngrok domain at
+`https://unstaffed-disperser-tweezers.ngrok-free.dev/github-webhook/`.
+For a later demo, run `brew services start jenkins-lts`, then run
+`ngrok http 8080 --url https://unstaffed-disperser-tweezers.ngrok-free.dev`
+in a terminal and keep it open. GitHub delivers pushes automatically while
+the tunnel is active. Email notifications for success and failure are sent
+on every build. Re-running the pipeline is idempotent
+(`compose down --remove-orphans` followed by `compose up -d` and a health gate).
 
-Create a Pipeline job pointing at this repository with script path
-`Jenkinsfile`; no extra configuration needed beyond the `dockerhub-creds`
-credential and an SMTP server for mail.
+The configured Jenkins Pipeline job uses this repository and `Jenkinsfile`.
+Its Docker Hub credential is stored in Jenkins, and Gmail SMTP is configured
+for build notifications.
 
 ## Repository layout
 

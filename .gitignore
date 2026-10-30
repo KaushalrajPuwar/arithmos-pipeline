@@ -19,7 +19,7 @@ target/
 *~
 .DS_Store
 
-# Environment & secrets — never commit these
+# Environment & secrets
 .env
 .env.*
 *.pem
