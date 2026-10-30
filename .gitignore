@@ -45,6 +45,7 @@ report/*.toc
 report/*.synctex.gz
 report/*.fls
 report/*.fdb_latexmk
+report/*.tex
 
 # Misc
 *.orig
