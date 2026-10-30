@@ -1,0 +1,51 @@
+# Maven build output
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE files
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.code-workspace
+.classpath
+.project
+.settings/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment & secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+credentials*.xml
+*-credentials*
+
+# Jenkins
+.jenkins/
+jenkins*.log
+
+# Docker
+.docker/
+
+# LaTeX report build artefacts
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.synctex.gz
+report/*.fls
+report/*.fdb_latexmk
+
+# Misc
+*.orig
+*.rej
