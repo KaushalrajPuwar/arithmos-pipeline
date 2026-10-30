@@ -5,6 +5,12 @@ wrapped in a fully automated DevOps pipeline: **Git/GitHub → Jenkins →
 Docker → Docker Compose**. Push to `main` and the pipeline builds, tests,
 packages, containerizes, pushes, and deploys with no manual steps.
 
+**Links**
+
+- GitHub repository: https://github.com/KaushalrajPuwar/arithmos-pipeline
+- Docker Hub image (public): https://hub.docker.com/r/kaushalrajpuwar/arithmos-calculator
+  - `docker pull kaushalrajpuwar/arithmos-calculator:latest`
+
 ## API
 
 | Operation | Endpoint | Behaviour |
