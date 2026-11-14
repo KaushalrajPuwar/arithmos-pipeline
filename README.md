@@ -100,7 +100,7 @@ on every build. Re-running the pipeline is idempotent
 (`compose down --remove-orphans` followed by `compose up -d` and a health gate).
 
 The configured Jenkins Pipeline job uses this repository and `Jenkinsfile`.
-Its Docker Hub credential is stored in Jenkins, and Gmail SMTP is configured
+Its Docker Hub credential is stored in Jenkins, and Email SMTP is configured
 for build notifications.
 
 ## Repository layout
